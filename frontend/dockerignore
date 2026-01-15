@@ -1,0 +1,9 @@
+node_modules
+.cache
+build
+.env
+.DS_Store
+.env
+venv/
+node_modules/
+db.sqlite3
