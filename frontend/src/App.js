@@ -20,10 +20,10 @@ const generateReply = async () => {
   try {
     const res = await axios.post(
       "https://ai-email-reply-assistant-2.onrender.com/api/generate-reply/",
-       JSON.stringify({
-    email_text: emailText,
-    tone: tone,
-  }),
+      {
+        email_text: emailText,
+        tone: tone,
+      },
       {
         headers: {
           "Content-Type": "application/json",
@@ -39,6 +39,7 @@ const generateReply = async () => {
     setLoading(false);
   }
 };
+
 
   const copyReply = () => {
     if (reply) {
