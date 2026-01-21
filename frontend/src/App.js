@@ -10,23 +10,35 @@ function App() {
   const [reply, setReply] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const generateReply = async () => {
-    if (!emailText || !tone) {
-      alert("Please enter email content and select a tone!");
-      return;
-    }
-    setLoading(true);
-    try {
-      const res = await axios.post("https://ai-email-reply-assistant-2.onrender.com/api/generate-reply/", {
+const generateReply = async () => {
+  if (!emailText || !tone) {
+    alert("Please enter email content and select a tone!");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const res = await axios.post(
+      "https://ai-email-reply-assistant-2.onrender.com/api/generate-reply/",
+      {
         email_text: emailText,
         tone: tone,
-      });
-      setReply(res.data.reply);
-    } catch (err) {
-      alert("Error generating reply");
-    }
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    setReply(res.data.reply);
+  } catch (err) {
+    console.error(err);
+    alert("Error generating reply");
+  } finally {
     setLoading(false);
-  };
+  }
+};
 
   const copyReply = () => {
     if (reply) {
