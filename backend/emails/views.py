@@ -10,14 +10,12 @@ client = OpenAI(api_key=settings.OPENAI_API_KEY)
 @permission_classes([AllowAny])
 def generate_reply(request):
 
-    print("DATA:", request.data)  # debug
-
     email_text = request.data.get("email_text")
     tone = request.data.get("tone", "professional")
 
     if not email_text:
         return Response(
-            {"error": "email_text is required", "received_data": request.data},
+            {"error": "email_text is required"},
             status=400
         )
 
@@ -27,3 +25,4 @@ def generate_reply(request):
     )
 
     return Response({"reply": response.output_text})
+

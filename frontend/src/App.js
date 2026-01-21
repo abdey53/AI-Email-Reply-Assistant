@@ -24,6 +24,11 @@ const generateReply = async () => {
         email_text: emailText,
         tone: tone,
       },
+       {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
     );
 
     setReply(res.data.reply);
