@@ -1,6 +1,6 @@
-import json
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from openai import OpenAI
 from django.conf import settings
@@ -9,49 +9,36 @@ from emails.models import EmailReply
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 
-@csrf_exempt
 @api_view(['POST'])
+@authentication_classes([BasicAuthentication])  # 🔥 THIS IS THE KEY
+@permission_classes([AllowAny])
 def generate_reply(request):
-    try:
-        data = json.loads(request.body.decode("utf-8"))
-    except Exception:
-        return Response({"error": "Invalid JSON"}, status=400)
 
-    email_text = data.get("email_text")
-    tone = data.get("tone", "professional")
+    email_text = request.data.get("email_text")
+    tone = request.data.get("tone", "professional")
 
     if not email_text:
         return Response(
-            {"error": "email_text is required"},
+            {
+                "error": "email_text is required",
+                "received_data": request.data
+            },
             status=400
         )
 
     prompt = f"""
-You are a professional email assistant.
-Generate a {tone} reply for the following email:
+    You are a professional email assistant.
+    Generate a {tone} reply for the following email:
 
-"{email_text}"
-"""
+    "{email_text}"
+    """
 
-    try:
-        response = client.responses.create(
-            model="gpt-4.1-mini",
-            input=prompt
-        )
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        input=prompt
+    )
 
-        ai_reply = ""
-        for item in response.output:
-            if item["type"] == "output_text":
-                ai_reply += item["text"]
-
-        if not ai_reply:
-            ai_reply = "Sorry, I couldn't generate a reply."
-
-    except Exception as e:
-        return Response(
-            {"error": "OpenAI error", "details": str(e)},
-            status=500
-        )
+    ai_reply = response.output_text
 
     EmailReply.objects.create(
         email_text=email_text,
