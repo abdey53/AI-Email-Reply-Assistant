@@ -17,7 +17,7 @@ function App() {
     }
     setLoading(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/generate-reply/", {
+      const res = await axios.post("https://ai-email-reply-assistant-2.onrender.com/api/generate-reply/", {
         email_text: emailText,
         tone: tone,
       });

@@ -1,12 +1,14 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 from openai import OpenAI
 from django.conf import settings
 from emails.models import EmailReply
+from rest_framework.parsers import JSONParser
 
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 @api_view(['POST'])
+@parser_classes([JSONParser])
 def generate_reply(request):
     email_text = request.data.get('email_text')
     tone = request.data.get('tone', 'professional')
