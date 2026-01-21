@@ -14,7 +14,7 @@ def generate_reply(request):
     tone = request.data.get('tone', 'professional')
 
     if not email_text:
-        return Response({"error": "email_text is required"}, status=400)
+        return Response({"error": "email_text is required", "received_data": request.data}, status=400)
 
     prompt = f"""
     You are a professional email assistant.
