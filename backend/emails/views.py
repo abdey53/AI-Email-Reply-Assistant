@@ -1,4 +1,5 @@
 import json
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from openai import OpenAI
@@ -7,19 +8,18 @@ from emails.models import EmailReply
 
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
+
+@csrf_exempt          # 🔥 MUST BE FIRST
 @api_view(['POST'])
 def generate_reply(request):
-    data = request.data
 
-    # 🔥 FALLBACK: agar DRF parse fail kare
-    if not data or 'email_text' not in data:
-        try:
-            data = json.loads(request.body.decode('utf-8'))
-        except Exception:
-            data = {}
+    try:
+        data = json.loads(request.body.decode("utf-8"))
+    except Exception:
+        data = {}
 
-    email_text = data.get('email_text')
-    tone = data.get('tone', 'professional')
+    email_text = data.get("email_text")
+    tone = data.get("tone", "professional")
 
     if not email_text:
         return Response(
