@@ -1,33 +1,21 @@
-import json
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 from openai import OpenAI
 from django.conf import settings
 from emails.models import EmailReply
 
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
-
-@csrf_exempt          # 🔥 MUST BE FIRST
-@api_view(['POST'])
+@api_view(["POST"])
 def generate_reply(request):
-
-    try:
-        data = json.loads(request.body.decode("utf-8"))
-    except Exception:
-        data = {}
-
-    email_text = data.get("email_text")
-    tone = data.get("tone", "professional")
+    email_text = request.data.get("email_text")
+    tone = request.data.get("tone", "professional")
 
     if not email_text:
         return Response(
-            {
-                "error": "email_text is required",
-                "received_data": data
-            },
-            status=400
+            {"error": "email_text is required", "received_data": request.data},
+            status=status.HTTP_400_BAD_REQUEST
         )
 
     prompt = f"""
