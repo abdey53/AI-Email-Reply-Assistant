@@ -1,6 +1,6 @@
-from rest_framework.decorators import api_view, parser_classes
+import json
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser, FormParser
 from openai import OpenAI
 from django.conf import settings
 from emails.models import EmailReply
@@ -8,16 +8,24 @@ from emails.models import EmailReply
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 @api_view(['POST'])
-@parser_classes([JSONParser, FormParser])  
 def generate_reply(request):
-    email_text = request.data.get('email_text')
-    tone = request.data.get('tone', 'professional')
+    data = request.data
+
+    # 🔥 FALLBACK: agar DRF parse fail kare
+    if not data or 'email_text' not in data:
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+        except Exception:
+            data = {}
+
+    email_text = data.get('email_text')
+    tone = data.get('tone', 'professional')
 
     if not email_text:
         return Response(
             {
                 "error": "email_text is required",
-                "received_data": request.data
+                "received_data": data
             },
             status=400
         )
