@@ -56,7 +56,7 @@ body, html, #root, .app {
   gap: 2rem;
   padding: 2rem 1rem;
   flex-wrap: wrap;
-  max-width: 1100px;
+  max-width: 1170px;
   margin: auto;
 }
 
@@ -162,38 +162,101 @@ button:hover {
 }
 
 /* Footer */
-.footer {
-  background: linear-gradient(135deg, #764ba2, #667eea);
-  color: #fff;
-  padding: 2rem 1rem;
+/* Developer Footer */
+.dev-footer {
+  margin-top: 4rem;
+  padding: 3rem 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  border-radius: 24px 24px 0 0;
   text-align: center;
-  margin-top: 3rem;
-  border-top-left-radius: 50% 15%;
-  border-top-right-radius: 50% 15%;
+  color: #fff;
 }
 
-.footer p {
-  margin: 0;
+.dev-footer h2 {
+  margin-bottom: 0.6rem;
+  font-size: 1.9rem;
+  letter-spacing: 0.5px;
+}
+
+.dev-desc {
+  max-width: 750px;
+  margin: 0 auto 2rem;
   font-size: 1rem;
+  line-height: 1.7;
+  color: #f1f1f1;
 }
 
-.footer-icons {
-  margin-top: 1rem;
+/* Cards */
+.dev-cards {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  font-size: 1.5rem;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
 }
 
-.footer-icons a {
+.dev-card {
+  background: rgba(255, 255, 255, 0.18);
+  padding: 1.2rem 1.5rem;
+  border-radius: 16px;
+  min-width: 220px;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dev-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 35px rgba(0,0,0,0.28);
+}
+
+.dev-card h4 {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+  color: #ffd700;
+}
+
+.dev-card p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Social Icons */
+.dev-socials {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  font-size: 1.7rem;
+  margin-bottom: 1.2rem;
+}
+
+.dev-socials a {
   color: #fff;
   transition: 0.3s;
 }
 
-.footer-icons a:hover {
+.dev-socials a:hover {
   color: #ffd700;
-  transform: translateY(-3px) scale(1.1);
+  transform: translateY(-4px) scale(1.15);
 }
+
+/* Copyright */
+.copyright {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dev-footer h2 {
+    font-size: 1.6rem;
+  }
+
+  .dev-desc {
+    font-size: 0.95rem;
+  }
+}
+
 
 /* Responsive */
 @media (max-width: 900px) {
@@ -212,3 +275,94 @@ button:hover {
   transform: translateY(-4px) scale(1.2);
 }
 
+/* About Project Section */
+/* ==================== About Project Section ==================== */
+/* Glassmorphic Accordion */
+
+/* Glassmorphic Accordion Container */
+.about-accordion {
+    max-width: 1150px;
+    margin: 3rem auto;
+    margin-top: 0;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.12); /* frosted glass */
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+/* Accordion Button */
+.about-accordion .accordion-button {
+    background: rgba(255, 255, 255, 0.07);
+    color: #415c8d;
+    font-weight: 600;
+    font-size: 1.3rem;
+    transition: all 0.4s ease;
+    border: none;
+    border-radius: 0;
+    position: relative;
+    backdrop-filter: blur(12px);
+    box-shadow: inset 0 0 5px rgba(255,255,255,0.1);
+}
+
+/* Hover Animation & Glow */
+.about-accordion .accordion-button:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5), 0 0 12px rgba(255,255,255,0.3);
+}
+
+/* Active Button */
+.about-accordion .accordion-button:not(.collapsed) {
+    background: rgba(255, 255, 255, 0.22);
+    font-weight: 700;
+    color: #323781;
+    box-shadow: 0 8px 28px rgba(102, 126, 234, 0.6), 0 0 15px rgba(255,255,255,0.3);
+}
+
+/* Accordion Body */
+.about-accordion .accordion-body {
+    background: rgba(255, 255, 255, 0.08);
+    color: #2b2b31;
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 1.5rem 2rem;
+    backdrop-filter: blur(18px);
+    border-radius: 0 0 25px 25px;
+    box-shadow: inset 0 2px 15px rgba(255, 255, 255, 0.05);
+    transition: all 0.5s ease;
+}
+
+/* Accordion Collapse Smooth Transition */
+.about-accordion .accordion-collapse {
+    transition: max-height 0.5s ease, padding 0.4s ease;
+}
+
+/* Tech Tags */
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.tech-tag {
+    background: rgba(21, 6, 51, 0.719);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.tech-tag:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.45);
+    background: rgba(207, 76, 76, 0.35);
+}
