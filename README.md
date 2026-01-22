@@ -7,7 +7,7 @@ full-stack web application that generates AI-powered email replies based on user
 ## 🌐 Live Demo
 👉🏻 Live Deployment Link - https://abdey53.github.io/AI-Email-Reply-Assistant/
 
-👉🏻 Backend GitHub link - https://github.com/parthkhatke/Ai-email-assistant-backend
+👉🏻 Backend GitHub link - https://ai-email-reply-assistant-2.onrender.com/
 
 ## 📸 Preview
 <img width="1342" height="611" alt="image" src="https://github.com/user-attachments/assets/7f65d60a-db50-41bb-8b54-4c8ecfcd3cb7" />
